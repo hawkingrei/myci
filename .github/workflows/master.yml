@@ -14,8 +14,7 @@ jobs:
         uses: bazel-contrib/setup-bazel@0.15.0
         with:
           bazelisk-cache: true
-      - name: init bazelrc
-        run: echo {{BAZELRC}} >> ~/.bazelrc
+          bazelrc: ${{ secrets.BAZELRC}}
       - name: init gcp
         run: mkdir -p ~/.secret && echo {{GCP_SA_KEY}} > ~/.secret/gcp-compute-dev-9c677af55a0e.json
       - name: Set up Go
