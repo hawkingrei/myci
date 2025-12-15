@@ -1,5 +1,8 @@
 name: General Hourly Tests
 on:
+  push:
+    branches:
+      - main
   # Schedule daily updates
   schedule: [{cron: "*/5 * * * *"}]
 jobs:
