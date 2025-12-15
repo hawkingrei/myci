@@ -16,7 +16,7 @@ jobs:
           bazelisk-cache: true
           bazelrc: ${{ secrets.BAZELRC}}
       - name: init gcp
-        run: mkdir -p ~/.secret && echo {{GCP_SA_KEY}} > ~/.secret/gcp-compute-dev-9c677af55a0e.json
+        run: mkdir -p /Users/runner/.secret && echo {{GCP_SA_KEY}} > /Users/runner/.secret/gcp-compute-dev-9c677af55a0e.json
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
