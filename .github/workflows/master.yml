@@ -25,6 +25,4 @@ jobs:
       - name: clone tidb
         run: git clone https://github.com/pingcap/tidb.git --depth=1 -b master
       - name: Run tests
-        env:
-          CI: false
-        run: cd tidb && make bazel_bin 
+        run: cd tidb && unset CI &&  make bazel_bin 
