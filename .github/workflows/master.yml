@@ -27,4 +27,4 @@ jobs:
       - name: clone tidb
         run: git clone https://github.com/pingcap/tidb.git --depth=1 -b master
       - name: Run tests
-        run: cd tidb && unset CI &&  sed -i '/bazel-cache/d'  DEPS.bzl && sed -i '/ats.apps.svc/d'  DEPS.bzl && sed -i '/bazel-cache/d'  WORKSPACE && sed -i '/ali/d'  WORKSPACE && make bazel_bin
+        run: cd tidb && unset CI &&  sed -i '/bazel-cache/d'  DEPS.bzl && sed -i '/ats.apps.svc/d'  DEPS.bzl && sed -i '/bazel-cache/d'  WORKSPACE && sed -i '/ats.apps.svc/d'  WORKSPACE && make bazel_bin
