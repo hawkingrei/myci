@@ -18,7 +18,7 @@ jobs:
         run: echo {{BAZELRC}} >> ~/.bazelrc
       - name: init gcp
         run: mkdir -p ~/.secret && echo {{GCP_SA_KEY}} > ~/.secret/gcp-compute-dev-9c677af55a0e.json
-      - name: clone tidb-test
+      - name: clone tidb
         run: git clone https://github.com/pingcap/tidb.git --depth=1 -b master
       - name: Run tests
-        run: cd tidb-test && make bazel_bin 
+        run: cd tidb && make bazel_bin 
