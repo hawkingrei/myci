@@ -1,0 +1,24 @@
+name: General Hourly Tests
+on:
+  # Schedule daily updates
+  schedule: [{cron: "*/5 * * * *"}]
+jobs:
+  master:
+    name: Master Hourly Tests
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Set up bazelisk
+        uses: bazel-contrib/setup-bazel@0.15.0
+        with:
+          bazelisk-cache: true
+      - name: init bazelrc
+        run: echo {{BAZELRC}} >> ~/.bazelrc
+      - name: init gcp
+        run: mkdir -p ~/.secret && echo {{GCP_SA_KEY}} > ~/.secret/gcp-compute-dev-9c677af55a0e.json
+      - name: clone tidb-test
+        run: git clone https://github.com/pingcap/tidb.git --depth=1 -b master
+      - name: Run tests
+        run: cd tidb-test && make bazel_bin 
