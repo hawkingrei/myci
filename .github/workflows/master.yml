@@ -17,6 +17,8 @@ jobs:
         uses: bazel-contrib/setup-bazel@0.15.0
         with:
           bazelisk-cache: true
+          disk-cache: true
+          repository-cache: true
           bazelrc: ${{ secrets.BAZELRC}}
       - name: init gcp
         run: mkdir -p /Users/runner/.secret && echo '${{ secrets.GCP_SA_KEY}}' > /Users/runner/.secret/gcp-compute-dev-9c677af55a0e.json
