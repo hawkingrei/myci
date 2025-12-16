@@ -17,7 +17,6 @@ jobs:
         uses: bazel-contrib/setup-bazel@0.15.0
         with:
           bazelisk-cache: true
-          disk-cache: true
           repository-cache: true
           bazelrc: ${{ secrets.BAZELRC}}
       - name: init gcp
