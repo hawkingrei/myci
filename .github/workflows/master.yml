@@ -19,6 +19,26 @@ jobs:
       - name: Set up bazelisk
         uses: bazel-contrib/setup-bazel@0.15.0
         with:
-          bazelisk-cache: true
-          repository-cache: true
-          bazelrc: ${{ secrets.BAZELRC}}
+          bazelrc: ${{ secrets.BAZELRC }}
+          gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+          go-version: 1.25
+          tidb_branch: master
+  master-ubuntu:  
+    name: Master Hourly Tests on Ubuntu
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform:
+          - linux/arm64/v8
+          - linux/amd64
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: TiDB Tests
+        uses: ./.github/actions/tidb-tests
+        with:
+          bazelrc: ${{ secrets.BAZELRC }}
+          gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+          go-version: 1.25
+          tidb_branch: master
