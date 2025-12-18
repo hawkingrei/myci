@@ -29,6 +29,7 @@ runs:
     - name: Init GCP credentials
       shell: bash
       run: |
+        echo $HOME
         mkdir -p "$HOME/.secret"
         echo '${{ inputs.gcp_sa_key }}' > "$HOME/.secret/gcp-compute-dev-9c677af55a0e.json"
 
