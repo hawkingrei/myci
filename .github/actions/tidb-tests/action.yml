@@ -1,0 +1,56 @@
+name: TiDB Tests
+description: Common steps to run TiDB Bazel tests cross-platform
+inputs:
+  go-version:
+    description: Go version to setup
+    required: false
+    default: "1.25"
+  bazelrc:
+    description: Bazelrc content from secrets
+    required: true
+  gcp_sa_key:
+    description: GCP service account key JSON content
+    required: true
+  tidb_branch:
+    description: TiDB branch to clone
+    required: false
+    default: "master"
+runs:
+  using: composite
+  steps:
+    - name: Set up bazelisk
+      uses: bazel-contrib/setup-bazel@0.15.0
+      with:
+        bazelisk-cache: true
+        disk-cache: true
+        repository-cache: true
+        google-credentials: ${{ inputs.gcp_sa_key }}
+        bazelrc: ${{ inputs.bazelrc }}
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ inputs.go-version }}
+
+    - name: Clone TiDB
+      shell: bash
+      run: |
+        git clone https://github.com/pingcap/tidb.git --depth=1 -b "${{ inputs.tidb_branch }}"
+
+    - name: Run tests
+      shell: bash
+      run: |
+        cd tidb
+        unset CI
+        if [[ $(uname) == "Darwin" ]]; then
+          sed -i '' '/bazel-cache/d' DEPS.bzl
+          sed -i '' '/ats.apps.svc/d' DEPS.bzl
+          sed -i '' '/bazel-cache/d' WORKSPACE
+          sed -i '' '/ats.apps.svc/d' WORKSPACE
+        else
+          sed -i '/bazel-cache/d' DEPS.bzl
+          sed -i '/ats.apps.svc/d' DEPS.bzl
+          sed -i '/bazel-cache/d' WORKSPACE
+          sed -i '/ats.apps.svc/d' WORKSPACE
+        fi
+        make bazel_bin
