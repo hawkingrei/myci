@@ -54,3 +54,4 @@ runs:
           sed -i '/ats.apps.svc/d' WORKSPACE
         fi
         make bazel_bin
+        make bazel_prepare
