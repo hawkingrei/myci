@@ -48,7 +48,7 @@ runs:
           sed -i '' '/bazel-cache/d' WORKSPACE
           sed -i '' '/ats.apps.svc/d' WORKSPACE
         else
-          apt-get install -y sed
+          sudo apt-get install -y sed
           sed -i '/bazel-cache/d' DEPS.bzl
           sed -i '/ats.apps.svc/d' DEPS.bzl
           sed -i '/bazel-cache/d' WORKSPACE
