@@ -60,4 +60,4 @@ runs:
         bazel run //:gazelle
         bazel test --@io_bazel_rules_go//go/config:race --build_tests_only \ 
           --define gotags=deadlock,intest -- //... -//cmd/... -//tests/graceshutdown/... -//tests/globalkilltest/... -//tests/readonlytest/... -//br/pkg/task:task_test -//tests/realtikvtest/...
-         make bazel_prepare
+        make bazel_prepare
