@@ -40,15 +40,16 @@ runs:
     - name: Run tests
       shell: bash
       run: |
+        #!/bin/bash
         cd tidb
         unset CI
-        if [[ $(uname) == "Darwin" ]]; then
+        system_name=$(uname -s)
+        if [ "$system_name" == "Darwin" ]; then
           sed -i '' '/bazel-cache/d' DEPS.bzl
           sed -i '' '/ats.apps.svc/d' DEPS.bzl
           sed -i '' '/bazel-cache/d' WORKSPACE
           sed -i '' '/ats.apps.svc/d' WORKSPACE
-        else
-          sudo apt-get install -y sed
+        elif [ "$system_name" == "Linux" ]; then
           sed -i '/bazel-cache/d' DEPS.bzl
           sed -i '/ats.apps.svc/d' DEPS.bzl
           sed -i '/bazel-cache/d' WORKSPACE
