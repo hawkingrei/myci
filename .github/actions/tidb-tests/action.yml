@@ -56,5 +56,5 @@ runs:
         fi
         bazel clean --expunge
         make bazel_bin
-        bazel  build //... --//build:with_nogo_flag=true
+        bazel  build //pkg/planner/... --//build:with_nogo_flag=true
         make bazel_prepare
