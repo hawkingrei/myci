@@ -22,7 +22,6 @@ runs:
       uses: bazel-contrib/setup-bazel@0.15.0
       with:
         bazelisk-cache: true
-        disk-cache: true
         repository-cache: true
         google-credentials: ${{ inputs.gcp_sa_key }}
         bazelrc: ${{ inputs.bazelrc }}
