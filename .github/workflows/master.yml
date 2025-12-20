@@ -29,7 +29,6 @@ jobs:
     strategy:
       matrix:
         platform:
-          - linux/arm64/v8
           - linux/amd64
     steps:
       - uses: actions/checkout@v6
