@@ -55,4 +55,5 @@ runs:
           sed -i '/ats.apps.svc/d' WORKSPACE
         fi
         make bazel_bin
+        bazel  build //pkg/planner/... --//build:with_nogo_flag=true
         make bazel_prepare
