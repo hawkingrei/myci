@@ -22,7 +22,6 @@ runs:
       uses: bazel-contrib/setup-bazel@0.15.0
       with:
         bazelisk-cache: true
-        disk-cache: true
         repository-cache: true
         google-credentials: ${{ inputs.gcp_sa_key }}
         bazelrc: ${{ inputs.bazelrc }}
@@ -40,18 +39,22 @@ runs:
     - name: Run tests
       shell: bash
       run: |
+        #!/bin/bash
         cd tidb
         unset CI
-        if [[ $(uname) == "Darwin" ]]; then
+        system_name=$(uname -s)
+        if [ "$system_name" == "Darwin" ]; then
           sed -i '' '/bazel-cache/d' DEPS.bzl
           sed -i '' '/ats.apps.svc/d' DEPS.bzl
           sed -i '' '/bazel-cache/d' WORKSPACE
           sed -i '' '/ats.apps.svc/d' WORKSPACE
-        else
+        elif [ "$system_name" == "Linux" ]; then
           sed -i '/bazel-cache/d' DEPS.bzl
           sed -i '/ats.apps.svc/d' DEPS.bzl
           sed -i '/bazel-cache/d' WORKSPACE
           sed -i '/ats.apps.svc/d' WORKSPACE
         fi
+        bazel clean --expunge
         make bazel_bin
+        bazel  build //pkg/planner/... --//build:with_nogo_flag=true
         make bazel_prepare
