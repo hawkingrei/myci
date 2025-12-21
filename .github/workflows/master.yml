@@ -72,7 +72,7 @@ jobs:
         shell: bash
         run: |
           #!/bin/bash
-          git clone https://github.com/pingcap/tidb.git --depth=1 -b "${{ inputs.tidb_branch }}"
+          git clone https://github.com/pingcap/tidb.git --depth=1 -b ${{ inputs.tidb_branch }}
           cd tidb
           unset CI
           system_name=$(uname -s)
