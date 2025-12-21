@@ -92,6 +92,4 @@ jobs:
             sed -i '/bazel-cache/d' WORKSPACE
             sed -i '/ats.apps.svc/d' WORKSPACE
           fi
-          OUTPUT_BASE="${RUNNER_TEMP:-/tmp}/bazel-out"
-          mkdir -p "$OUTPUT_BASE"
-          bazel  --output_base="$OUTPUT_BASE" build  --sandbox_debug //pkg/planner/core/... --//build:with_nogo_flag=true         
+          bazel  --output_base=/home/runner/work/_temp/bazel-out build  --sandbox_debug //pkg/planner/core/... --//build:with_nogo_flag=true         
