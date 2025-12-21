@@ -73,6 +73,7 @@ jobs:
           git clone https://github.com/pingcap/tidb.git --depth=1 -b master
           cd tidb
           unset CI
+          bazel clean --expunge
           system_name=$(uname -s)
           if [ "$system_name" == "Darwin" ]; then
             sed -i '' '/bazel-cache/d' DEPS.bzl
