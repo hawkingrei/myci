@@ -11,10 +11,6 @@ inputs:
   gcp_sa_key:
     description: GCP service account key JSON content
     required: true
-  tidb_branch:
-    description: TiDB branch to clone
-    required: false
-    default: "master"
 runs:
   using: composite
   steps:
