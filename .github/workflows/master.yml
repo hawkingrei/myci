@@ -92,4 +92,5 @@ jobs:
             sed -i '/bazel-cache/d' WORKSPACE
             sed -i '/ats.apps.svc/d' WORKSPACE
           fi
+          bazel clean --expunge
           bazel  --output_base=/home/runner/work/_temp/bazel-out build  --sandbox_debug //pkg/planner/core/... --//build:with_nogo_flag=true         
