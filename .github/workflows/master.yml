@@ -85,5 +85,5 @@ jobs:
             sed -i '/bazel-cache/d' WORKSPACE
             sed -i '/ats.apps.svc/d' WORKSPACE
           fi
-          bazel  build //pkg/planner/... --//build:with_nogo_flag=true
+          bazel  build //pkg/planner/core/... --//build:with_nogo_flag=true
           make bazel_prepare          
