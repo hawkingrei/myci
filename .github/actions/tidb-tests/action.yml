@@ -11,10 +11,6 @@ inputs:
   gcp_sa_key:
     description: GCP service account key JSON content
     required: true
-  tidb_branch:
-    description: TiDB branch to clone
-    required: false
-    default: "master"
 runs:
   using: composite
   steps:
@@ -33,30 +29,3 @@ runs:
       with:
         go-version: ${{ inputs.go-version }}
 
-    - name: Clone TiDB
-      shell: bash
-      run: |
-        git clone https://github.com/pingcap/tidb.git --depth=1 -b "${{ inputs.tidb_branch }}"
-
-    - name: Run tests
-      shell: bash
-      run: |
-        #!/bin/bash
-        cd tidb
-        unset CI
-        system_name=$(uname -s)
-        if [ "$system_name" == "Darwin" ]; then
-          sed -i '' '/bazel-cache/d' DEPS.bzl
-          sed -i '' '/ats.apps.svc/d' DEPS.bzl
-          sed -i '' '/bazel-cache/d' WORKSPACE
-          sed -i '' '/ats.apps.svc/d' WORKSPACE
-        elif [ "$system_name" == "Linux" ]; then
-          sed -i '/bazel-cache/d' DEPS.bzl
-          sed -i '/ats.apps.svc/d' DEPS.bzl
-          sed -i '/bazel-cache/d' WORKSPACE
-          sed -i '/ats.apps.svc/d' WORKSPACE
-        fi
-        bazel clean --expunge
-        make bazel_bin
-        bazel  build //pkg/planner/... --//build:with_nogo_flag=true
-        make bazel_prepare
