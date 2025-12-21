@@ -94,4 +94,4 @@ jobs:
           fi
           OUTPUT_BASE="${RUNNER_TEMP:-/tmp}/bazel-out"
           mkdir -p "$OUTPUT_BASE"
-          bazel  build //pkg/planner/core/... --output_base="$OUTPUT_BASE" --//build:with_nogo_flag=true         
+          bazel  --output_base="$OUTPUT_BASE" build //pkg/planner/core/... --//build:with_nogo_flag=true         
