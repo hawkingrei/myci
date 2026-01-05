@@ -47,4 +47,41 @@ jobs:
             sed -i '/ats.apps.svc/d' WORKSPACE
           fi
           make bazel_bin
-          make bazel_prepare
+  prepare:
+    name: Prepare Tests
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      matrix:
+        os:
+          - macos
+          - ubuntu
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: TiDB Tests
+        uses: ./.github/actions/tidb-tests
+        with:
+          bazelrc: ${{ secrets.BAZELRC }}
+          gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+          go-version: 1.25
+      - name: Run tests
+        shell: bash
+        run: |
+          #!/bin/bash
+          git clone https://github.com/pingcap/tidb.git --depth=1 -b master
+          cd tidb
+          unset CI
+          system_name=$(uname -s)
+          if [ "$system_name" == "Darwin" ]; then
+            sed -i '' '/bazel-cache/d' DEPS.bzl
+            sed -i '' '/ats.apps.svc/d' DEPS.bzl
+            sed -i '' '/bazel-cache/d' WORKSPACE
+            sed -i '' '/ats.apps.svc/d' WORKSPACE
+          elif [ "$system_name" == "Linux" ]; then
+            sed -i '/bazel-cache/d' DEPS.bzl
+            sed -i '/ats.apps.svc/d' DEPS.bzl
+            sed -i '/bazel-cache/d' WORKSPACE
+            sed -i '/ats.apps.svc/d' WORKSPACE
+          fi
+          make bazel_prepare          
