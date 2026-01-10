@@ -17,6 +17,9 @@ jobs:
         os:
           - macos
           - ubuntu
+        branch:
+          - master
+          - release-8.5
     steps:
       - uses: actions/checkout@v6
         with:
@@ -31,7 +34,7 @@ jobs:
         shell: bash
         run: |
           #!/bin/bash
-          git clone https://github.com/pingcap/tidb.git --depth=1 -b master
+          git clone https://github.com/pingcap/tidb.git --depth=1 -b ${{ matrix.branch }}
           cd tidb
           unset CI
           system_name=$(uname -s)
@@ -55,6 +58,9 @@ jobs:
         os:
           - macos
           - ubuntu
+        branch:
+          - master
+          - release-8.5
     steps:
       - uses: actions/checkout@v6
         with:
@@ -69,7 +75,7 @@ jobs:
         shell: bash
         run: |
           #!/bin/bash
-          git clone https://github.com/pingcap/tidb.git --depth=1 -b master
+          git clone https://github.com/pingcap/tidb.git --depth=1 -b ${{ matrix.branch }}
           cd tidb
           unset CI
           system_name=$(uname -s)
