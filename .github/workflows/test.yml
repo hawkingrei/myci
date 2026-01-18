@@ -1,4 +1,4 @@
-name: General Hourly Tests
+name: General Hourly Building Tests
 on:
   push:
     branches:
