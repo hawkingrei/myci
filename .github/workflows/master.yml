@@ -90,4 +90,6 @@ jobs:
             sed -i '/bazel-cache/d' WORKSPACE
             sed -i '/ats.apps.svc/d' WORKSPACE
           fi
-          make bazel_prepare          
+          make bazel_prepare
+          make bazel-failpoint-enable
+          bazel build --define gotags=deadlock,intest -- //...   -//cmd/... -//tests/graceshutdown/... -//tests/globalkilltest/... -//tests/readonlytest/... -//tests/realtikvtest/...       
