@@ -48,6 +48,6 @@ jobs:
             sed -i '/bazel-cache/d' WORKSPACE
             sed -i '/ats.apps.svc/d' WORKSPACE
           fi
-          make bazel_prepare
           make bazel-failpoint-enable
+          make bazel_prepare
           bazel build --norun_validations --define gotags=deadlock,intest -- //...   -//cmd/... -//tests/graceshutdown/... -//tests/globalkilltest/... -//tests/readonlytest/... -//tests/realtikvtest/...       
